@@ -35,6 +35,8 @@ public class Radio {
     }
 
     public void setVolume(int volume) {
+        if (volume > 100) volume = 100;
+        if (volume < 0) volume = 0;
         this.volume = volume;
     }
 

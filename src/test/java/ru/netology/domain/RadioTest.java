@@ -40,7 +40,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldSetMaxStation(){
+    void shouldSetMaxStation() {
         newRadio.setMaxStation(15);
         int expected = 15;
         int actual = newRadio.getMaxStation();
@@ -114,6 +114,22 @@ class RadioTest {
         newRadio.prevStation();
         int expected = 29;
         int actual = newRadio.getStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetVolumeUpperLimit() {
+        myRadio.setVolume(120);
+        int expected = 100;
+        int actual = myRadio.getVolume();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetVolumeUnderLimit() {
+        myRadio.setVolume(-20);
+        int expected = 0;
+        int actual = myRadio.getVolume();
         assertEquals(expected, actual);
     }
 
