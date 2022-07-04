@@ -6,64 +6,130 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
     Radio myRadio = new Radio();
+    Radio newRadio = new Radio(30);
 
     @Test
     void shouldSetStation() {
-        myRadio.setStation(6);
+        myRadio.setCurrentStation(6);
         int expected = 6;
-        int actual = myRadio.getStation();
+        int actual = myRadio.getCurrentStation();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldSetStationBelowZero() {
-        myRadio.setStation(-2);
+        myRadio.setCurrentStation(-2);
         int expected = 0;
-        int actual = myRadio.getStation();
+        int actual = myRadio.getCurrentStation();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldSetStationAboveZero() {
-        myRadio.setStation(15);
+        myRadio.setCurrentStation(15);
         int expected = 0;
-        int actual = myRadio.getStation();
+        int actual = myRadio.getCurrentStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldMaxStation30() {
+        int expected = 30;
+        int actual = newRadio.getStationsCount();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetMaxStation() {
+        newRadio.setStationsCount(15);
+        int expected = 15;
+        int actual = newRadio.getStationsCount();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldNextStation() {
-        myRadio.setStation(3);
+        myRadio.setCurrentStation(3);
         myRadio.nextStation();
         int expected = 4;
-        int actual = myRadio.getStation();
+        int actual = myRadio.getCurrentStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldNextStationMaxStation30() {
+        newRadio.setCurrentStation(25);
+        newRadio.nextStation();
+        int expected = 26;
+        int actual = newRadio.getCurrentStation();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldNextStationUpperLimit() {
-        myRadio.setStation(9);
+        myRadio.setCurrentStation(9);
         myRadio.nextStation();
         int expected = 0;
-        int actual = myRadio.getStation();
+        int actual = myRadio.getCurrentStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldNextStationUpperLimitMaxStation30() {
+        newRadio.setCurrentStation(29);
+        newRadio.nextStation();
+        int expected = 0;
+        int actual = newRadio.getCurrentStation();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldPrevStation() {
-        myRadio.setStation(5);
+        myRadio.setCurrentStation(5);
         myRadio.prevStation();
         int expected = 4;
-        int actual = myRadio.getStation();
+        int actual = myRadio.getCurrentStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldPrevStationMaxStation30() {
+        newRadio.setCurrentStation(17);
+        newRadio.prevStation();
+        int expected = 16;
+        int actual = newRadio.getCurrentStation();
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldPrevStationUnderLimit() {
-        myRadio.setStation(0);
         myRadio.prevStation();
         int expected = 9;
-        int actual = myRadio.getStation();
+        int actual = myRadio.getCurrentStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldPrevStationUnderLimitMaxStation30() {
+        newRadio.prevStation();
+        int expected = 29;
+        int actual = newRadio.getCurrentStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetVolumeUpperLimit() {
+        myRadio.setVolume(120);
+        int expected = 100;
+        int actual = myRadio.getVolume();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetVolumeUnderLimit() {
+        myRadio.setVolume(-20);
+        int expected = 0;
+        int actual = myRadio.getVolume();
         assertEquals(expected, actual);
     }
 
@@ -78,9 +144,9 @@ class RadioTest {
 
     @Test
     void shouldIncreaseVolumeUpperLimit() {
-        myRadio.setVolume(10);
+        myRadio.setVolume(100);
         myRadio.increaseVolume();
-        int expected = 10;
+        int expected = 100;
         int actual = myRadio.getVolume();
         assertEquals(expected, actual);
     }
@@ -102,4 +168,6 @@ class RadioTest {
         int actual = myRadio.getVolume();
         assertEquals(expected, actual);
     }
+
+
 }
